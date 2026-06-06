@@ -15,17 +15,23 @@ while True:
             print("Goodbye!")
             break
 
-        response = chatbot.invoke(
+        for msg, meta in chatbot.stream(
             {
-                'messages': [
-                    HumanMessage(
-                        content= user_prompt
-                    )
+                "messages": [
+                    HumanMessage(content=user_prompt)
                 ]
             },
-            config=config
-        )
-        print("AI: ", response['messages'][-1].content)
+            config=config,
+            stream_mode="messages"
+        ):
+            if (
+                meta.get("langgraph_node") == "chat_node"
+                and msg.content
+            ):
+                print(msg.content, end="", flush=True)
+
+        print()
+
     except KeyboardInterrupt:
         print("\nExiting chat...")
         break
