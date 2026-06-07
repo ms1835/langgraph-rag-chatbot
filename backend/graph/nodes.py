@@ -12,9 +12,9 @@ def create_chat_node(llm_with_tools):
             ]
             response = llm_with_tools.invoke(messages)
 
-            # print("\n=== LLM RESPONSE ===")
-            # print(response)
-            # print("====================\n")
+            print("\n=== LLM RESPONSE ===")
+            print(response)
+            print("====================\n")
 
             return {'messages': [response]}
         
